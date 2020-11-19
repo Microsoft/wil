@@ -19,6 +19,7 @@ target_sources(witest.noexcept PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../ResourceTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../ResultTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../Rpc.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SafearrayTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../SafeCastTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../TokenHelpersTests.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../UniqueWinRTEventTokenTests.cpp
