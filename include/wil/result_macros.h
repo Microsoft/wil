@@ -667,7 +667,7 @@ WI_ODR_PRAGMA("WIL_FreeMemory", "0")
 
 // Always logs a known failure
 #define LOG_HR(hr)                                              __R_FN(Log_Hr)(__R_INFO(#hr) wil::verify_hresult(hr))
-#define LOG_LAST_ERROR()                                        __R_FN(Log_GetLastError)(__R_INFO_ONLY(nullptr))
+#define LOG_LAST_ERROR()                                        (wil::last_error_context{}, __R_FN(Log_GetLastError)(__R_INFO_ONLY(nullptr)))
 #define LOG_WIN32(win32err)                                     __R_FN(Log_Win32)(__R_INFO(#win32err) win32err)
 #define LOG_NTSTATUS(status)                                    __R_FN(Log_NtStatus)(__R_INFO(#status) status)
 
@@ -678,8 +678,8 @@ WI_ODR_PRAGMA("WIL_FreeMemory", "0")
 #define LOG_IF_NULL_ALLOC(ptr)                                  __R_FN(Log_IfNullAlloc)(__R_INFO(#ptr) ptr)
 #define LOG_HR_IF(hr, condition)                                __R_FN(Log_HrIf)(__R_INFO(#condition) wil::verify_hresult(hr), wil::verify_bool(condition))
 #define LOG_HR_IF_NULL(hr, ptr)                                 __R_FN(Log_HrIfNull)(__R_INFO(#ptr) wil::verify_hresult(hr), ptr)
-#define LOG_LAST_ERROR_IF(condition)                            __R_FN(Log_GetLastErrorIf)(__R_INFO(#condition) wil::verify_bool(condition))
-#define LOG_LAST_ERROR_IF_NULL(ptr)                             __R_FN(Log_GetLastErrorIfNull)(__R_INFO(#ptr) ptr)
+#define LOG_LAST_ERROR_IF(condition)                            (wil::last_error_context{}, __R_FN(Log_GetLastErrorIf)(__R_INFO(#condition) wil::verify_bool(condition)))
+#define LOG_LAST_ERROR_IF_NULL(ptr)                             (wil::last_error_context{}, __R_FN(Log_GetLastErrorIfNull)(__R_INFO(#ptr) ptr))
 #define LOG_IF_NTSTATUS_FAILED(status)                          __R_FN(Log_IfNtStatusFailed)(__R_INFO(#status) status)
 
 // Alternatives for SUCCEEDED(hr) and FAILED(hr) that conditionally log failures
@@ -695,7 +695,7 @@ WI_ODR_PRAGMA("WIL_FreeMemory", "0")
 
 // Always logs a known failure - logs a var-arg message on failure
 #define LOG_HR_MSG(hr, fmt, ...)                                __R_FN(Log_HrMsg)(__R_INFO(#hr) wil::verify_hresult(hr), fmt, ##__VA_ARGS__)
-#define LOG_LAST_ERROR_MSG(fmt, ...)                            __R_FN(Log_GetLastErrorMsg)(__R_INFO(nullptr) fmt, ##__VA_ARGS__)
+#define LOG_LAST_ERROR_MSG(fmt, ...)                            (wil::last_error_context{}, __R_FN(Log_GetLastErrorMsg)(__R_INFO(nullptr) fmt, ##__VA_ARGS__))
 #define LOG_WIN32_MSG(win32err, fmt, ...)                       __R_FN(Log_Win32Msg)(__R_INFO(#win32err) win32err, fmt, ##__VA_ARGS__)
 #define LOG_NTSTATUS_MSG(status, fmt, ...)                      __R_FN(Log_NtStatusMsg)(__R_INFO(#status) status, fmt, ##__VA_ARGS__)
 
@@ -706,8 +706,8 @@ WI_ODR_PRAGMA("WIL_FreeMemory", "0")
 #define LOG_IF_NULL_ALLOC_MSG(ptr, fmt, ...)                    __R_FN(Log_IfNullAllocMsg)(__R_INFO(#ptr) ptr, fmt, ##__VA_ARGS__)
 #define LOG_HR_IF_MSG(hr, condition, fmt, ...)                  __R_FN(Log_HrIfMsg)(__R_INFO(#condition) wil::verify_hresult(hr), wil::verify_bool(condition), fmt, ##__VA_ARGS__)
 #define LOG_HR_IF_NULL_MSG(hr, ptr, fmt, ...)                   __R_FN(Log_HrIfNullMsg)(__R_INFO(#ptr) wil::verify_hresult(hr), ptr, fmt, ##__VA_ARGS__)
-#define LOG_LAST_ERROR_IF_MSG(condition, fmt, ...)              __R_FN(Log_GetLastErrorIfMsg)(__R_INFO(#condition) wil::verify_bool(condition), fmt, ##__VA_ARGS__)
-#define LOG_LAST_ERROR_IF_NULL_MSG(ptr, fmt, ...)               __R_FN(Log_GetLastErrorIfNullMsg)(__R_INFO(#ptr) ptr, fmt, ##__VA_ARGS__)
+#define LOG_LAST_ERROR_IF_MSG(condition, fmt, ...)              (wil::last_error_context{}, __R_FN(Log_GetLastErrorIfMsg)(__R_INFO(#condition) wil::verify_bool(condition), fmt, ##__VA_ARGS__))
+#define LOG_LAST_ERROR_IF_NULL_MSG(ptr, fmt, ...)               (wil::last_error_context{}, __R_FN(Log_GetLastErrorIfNullMsg)(__R_INFO(#ptr) ptr, fmt, ##__VA_ARGS__))
 #define LOG_IF_NTSTATUS_FAILED_MSG(status, fmt, ...)            __R_FN(Log_IfNtStatusFailedMsg)(__R_INFO(#status) status, fmt, ##__VA_ARGS__)
 
 #define __WI_COMMA_EXPECTED_HRESULT(e) , wil::verify_hresult(e)
