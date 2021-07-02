@@ -4233,6 +4233,14 @@ namespace wil
 #if !defined(NOWINABLE)
     typedef unique_any<HWINEVENTHOOK, decltype(&::UnhookWinEvent), ::UnhookWinEvent> unique_hwineventhook;
 #endif
+#if !defined(NOCLIPBOARD)
+    using unique_clipboard = unique_call<decltype(::CloseClipboard()), &::CloseClipboard>;
+
+    inline unique_clipboard open_clipboard(HWND hwnd)
+    {
+        return unique_clipboard(OpenClipboard(hwnd) != FALSE);
+    }
+#endif
 #endif // __WIL__WINUSER_
 
 #if !defined(NOGDI) && !defined(NODESKTOP)
