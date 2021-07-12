@@ -5361,6 +5361,11 @@ namespace wil
     typedef unique_any<HTHEME, decltype(&::CloseThemeData), ::CloseThemeData> unique_htheme;
 #endif // __WIL_INC_UXTHEME
 
+#if defined(_INC_USERENV) && !defined(__WIL_INC_USERENV) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) && !defined(WIL_KERNEL_MODE)
+#define __WIL_INC_USERENV
+    typedef unique_any<void*, decltype(&::DestroyEnvironmentBlock), ::DestroyEnvironmentBlock> unique_environment_block;
+#endif // __WIL_INC_USERENV
+
 #if defined(_WINSVC_) && !defined(__WIL_HANDLE_H_WINSVC) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) && !defined(WIL_KERNEL_MODE)
 #define __WIL_HANDLE_H_WINSVC
     typedef unique_any<SC_HANDLE, decltype(&::CloseServiceHandle), ::CloseServiceHandle> unique_schandle;
